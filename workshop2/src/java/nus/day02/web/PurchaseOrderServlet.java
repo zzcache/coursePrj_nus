@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -22,16 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/purchaseOrder"})
 public class PurchaseOrderServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     
     @PersistenceContext private EntityManager em;
     
@@ -43,14 +34,24 @@ public class PurchaseOrderServlet extends HttpServlet {
         query.setParameter("custId", custId);
         List<PurchaseOrder> result = query.getResultList();
         
-        JsonArrayBuilder builder = Json.createArrayBuilder();
-        for (PurchaseOrder po: result) {
-            builder.add(po.toJson());
+        if (result.size() <= 0) {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            resp.setContentType(MediaType.TEXT_PLAIN);
+            try (PrintWriter pw = resp.getWriter()) {
+                pw.print("NO RESULT FOUND!");
+            }
+        } else {
+            
+            JsonArrayBuilder builder = Json.createArrayBuilder();
+            for (PurchaseOrder po: result) {
+                builder.add(po.toJson());
+            }
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.setContentType("application/json");
+            try (PrintWriter pw = resp.getWriter()) {
+                pw.print(builder.build());
+            }
         }
-        
-        
-        
-        
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -71,17 +72,6 @@ public class PurchaseOrderServlet extends HttpServlet {
     }
 
    
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *

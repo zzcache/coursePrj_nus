@@ -34,7 +34,7 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name= "discount_code", 
             referencedColumnName = "discount_code")
-    private DiscountCode discontCode;
+    private DiscountCode discountCode;
     
     @OneToMany (mappedBy = "customer")
     private List<PurchaseOrder> purchaseOrders;
@@ -127,12 +127,12 @@ public class Customer {
         this.creditLimit = creditLimit;
     }
 
-    public DiscountCode getDiscontCode() {
-        return discontCode;
+    public DiscountCode getDiscountCode() {
+        return discountCode;
     }
 
-    public void setDiscontCode(DiscountCode discontCode) {
-        this.discontCode = discontCode;
+    public void setDiscountCode(DiscountCode discountCode) {
+        this.discountCode = discountCode;
     }
 
     public List<PurchaseOrder> getPurchaseOrders() {
