@@ -35,18 +35,22 @@ public class CustomerSQLServlet extends HttpServlet{
         
         Integer custId = Integer.parseInt(req.getParameter("custId"));
         try ( Connection conn = sampleDS.getConnection() ) {
-            PreparedStatement ps = conn.prepareStatement ( "select * from customer where customer_id = ?");
-            
+            PreparedStatement ps = conn.prepareStatement ( 
+                    "select * from customer where customer_id = ?");
+           
+            //Set the parameter
             ps.setInt(1, custId);
+            //Execute the query
+            
             ResultSet  rs = ps.executeQuery();
             if (rs.next()) {
-                System.out.println("nus.day02.web.CustomerSQLServlet.doGet()");
+                
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType(MediaType.TEXT_PLAIN);
                 try (PrintWriter pw = resp.getWriter()) {
-                    pw.printf(" id: %id, name: %s, address: %s, phone: %s email: %s \n", 
+                    pw.printf(" id: %d, name: %s, addressline1: %s, phone: %s email: %s \n", 
                             rs.getInt("customer_id"), rs.getString("name"),
-                            rs.getString("address"), rs.getString("phone"),
+                            rs.getString("addressline1"), rs.getString("phone"),
                             rs.getString("email"));
                 }
             } else {

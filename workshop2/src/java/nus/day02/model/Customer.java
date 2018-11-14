@@ -1,7 +1,10 @@
 
 package nus.day02.model;
 
+import java.math.BigDecimal;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -142,4 +145,28 @@ public class Customer {
     public void setPurchaseOrders(List<PurchaseOrder> purchaseOrders) {
         this.purchaseOrders = purchaseOrders;
     }
+    
+    public JsonObject toJson () {
+        return (Json.createObjectBuilder()
+                .add("customerId", customerId)
+                .add("name", name)
+                .add("addressline1", addressline1)
+                .add("addressline2", addressline2)
+                .add("city", city)
+                .add("state", state)
+                .add("zip", zip)
+                .add("phone", phone)
+                .add("fax", fax)
+                .add("email", email)
+                .add("discountCode", discountCode.getDiscountCode().toString())
+                .add("creditLimit", creditLimit)                
+                .build()
+                );
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" + "customerId=" + customerId + ", zip=" + zip + ", name=" + name + ", addressline1=" + addressline1 + ", addressline2=" + addressline2 + ", city=" + city + ", state=" + state + ", phone=" + phone + ", fax=" + fax + ", email=" + email + ", creditLimit=" + creditLimit + ", discountCode=" + discountCode + ", purchaseOrders=" + purchaseOrders + '}';
+    }
+    
 }

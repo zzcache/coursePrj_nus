@@ -1,5 +1,6 @@
 package nus.day02.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -132,8 +133,10 @@ public class PurchaseOrder {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         builder.add("orderNum", orderNum)
                 .add("productId", productId)
-                .add("freightCompany", freightCompany);
+                .add("freightCompany", freightCompany)
+                .add("shippingCost", shippingCost);
         return builder.build();
     }
     
+
 }
