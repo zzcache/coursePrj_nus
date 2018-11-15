@@ -49,6 +49,5 @@ public class CustomerBean {
             return (Optional.of(customer));
             
         }
-        
     }
 }
