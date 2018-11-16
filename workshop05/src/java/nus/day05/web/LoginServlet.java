@@ -94,9 +94,9 @@ public class LoginServlet extends HttpServlet {
         claims.put("host", req.getRemoteHost());
         claims.put("port", req.getRemotePort());
         
-        long exp = System.currentTimeMillis() + (1000 * 60 * 30);
+  //      long exp = System.currentTimeMillis() + (1000 * 60 * 30);
   // Token would be expired in 30 sec
-  //      long exp = System.currentTimeMillis() + (1000 * 30);  
+        long exp = System.currentTimeMillis() + (1000 * 30);  
         
         String token = Jwts.builder()
                 .setAudience("workshop05")
